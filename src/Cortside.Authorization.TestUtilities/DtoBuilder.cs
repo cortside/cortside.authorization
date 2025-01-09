@@ -1,0 +1,27 @@
+﻿using Cortside.Authorization.Dto;
+using Cortside.Common.Testing;
+
+namespace Cortside.Authorization.TestUtilities {
+    public class DtoBuilder {
+        public static UpdateCustomerDto GetUpdateCustomerDto() {
+            return new UpdateCustomerDto() {
+                FirstName = RandomValues.FirstName,
+                LastName = RandomValues.LastName,
+                Email = ModelBuilder.GetEmail()
+            };
+        }
+
+        public static CreateOrderDto GetCreateOrderDto() {
+            return new CreateOrderDto() {
+                Address = new AddressDto() {
+                    Street = RandomValues.AddressLine1,
+                    City = RandomValues.City,
+                    State = RandomValues.State,
+                    ZipCode = RandomValues.ZipCode,
+                    Country = "USA"
+                },
+                Items = []
+            };
+        }
+    }
+}
