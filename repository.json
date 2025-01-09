@@ -1,0 +1,32 @@
+{
+  "build": {
+    "configuration": "Debug",
+    "nugetfeed": "https://api.nuget.org/v3/index.json",
+    "publishableProject": "Cortside.Authorization.WebApi"
+  },
+  "database": {
+    "dbContext": "DatabaseContext",
+    "dbContextProject": "src/Cortside.Authorization.Data",
+    "name": "AuthorizationDev",
+    "startupProject": "src/Cortside.Authorization.WebApi",
+    "triggers": {
+      "excludeTables": [
+        "__EFMigrationsHistory",
+        "AuditLog",
+        "AuditLogTransaction",
+        "Outbox"
+      ]
+    }
+  },
+  "docker": {
+    "buildImage": "cortside.azurecr.io/dotnet-sdk:8.0-alpine",
+    "executable": "Cortside.Authorization.WebApi",
+    "image": "cortside.azurecr.io/authorization",
+    "runtimeImage": "cortside.azurecr.io/dotnet-runtime:8.0-alpine"
+  },
+  "repository": {
+    "name": "Cortside.Authorization"
+  },
+  "service": "authorization",
+  "version": "1.63"
+}

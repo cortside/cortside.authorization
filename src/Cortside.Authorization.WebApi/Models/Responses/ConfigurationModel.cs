@@ -4,16 +4,8 @@ namespace Cortside.Authorization.WebApi.Models.Responses {
     /// </summary>
     public class ConfigurationModel {
         /// <summary>
-        /// Service bus configuration
+        /// Authority
         /// </summary>
-        public ServiceBusModel ServiceBus { get; set; }
-        /// <summary>
-        /// Identity Server configuration
-        /// </summary>
-        public IdentityServerModel IdentityServer { get; set; }
-        /// <summary>
-        /// Policy Server configuration
-        /// </summary>
-        public PolicyServerModel PolicyServer { get; set; }
+        public string Authority { get; set; }
     }
 }

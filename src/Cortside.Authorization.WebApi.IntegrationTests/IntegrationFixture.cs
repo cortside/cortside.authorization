@@ -2,9 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq.Dynamic.Core;
-using Cortside.Authorization.Data;
-using Cortside.Authorization.WebApi.IntegrationTests.Mocks;
 using Cortside.AspNetCore.Testing;
+using Cortside.Authorization.Data;
 using Cortside.Common.Testing.Logging.Xunit;
 using Cortside.MockServer.AccessControl;
 using Cortside.MockServer.AccessControl.Models;
@@ -25,8 +24,7 @@ namespace Cortside.Authorization.WebApi.IntegrationTests {
         protected override void ConfigureMockHttpServer(IMockHttpServerBuilder builder) {
             builder.AddMock<CommonMock>()
                 .AddMock(new IdentityServerMock("./Data/discovery.json", "./Data/jwks.json"))
-                .AddMock(new SubjectMock("./Data/subjects.json"))
-                .AddMock<CatalogMock>();
+                .AddMock(new SubjectMock("./Data/subjects.json"));
         }
 
         protected override void ConfigureConfiguration(IConfigurationBuilder builder) {

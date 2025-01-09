@@ -47,7 +47,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Cortside.Authorization.Data\Cortside.Authorization.Data.csproj" />
-    <ProjectReference Include="..\Cortside.Authorization.TestUtilities\Cortside.Authorization.TestUtilities.csproj" />
     <ProjectReference Include="..\Cortside.Authorization.WebApi\Cortside.Authorization.WebApi.csproj" />
   </ItemGroup>
   <ItemGroup>

@@ -34,6 +34,5 @@
   <ItemGroup>
     <ProjectReference Include="..\Cortside.Authorization.Data\Cortside.Authorization.Data.csproj" />
     <ProjectReference Include="..\Cortside.Authorization.DomainService\Cortside.Authorization.DomainService.csproj" />
-    <ProjectReference Include="..\Cortside.Authorization.TestUtilities\Cortside.Authorization.TestUtilities.csproj" />
   </ItemGroup>
 </Project>

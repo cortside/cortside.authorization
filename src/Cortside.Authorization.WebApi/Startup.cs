@@ -1,9 +1,3 @@
-using Cortside.DomainEvent.Events;
-using Cortside.Authorization.BootStrap;
-using Cortside.Authorization.Data;
-using Cortside.Authorization.DomainEvent;
-using Cortside.Authorization.Health;
-using Cortside.Authorization.WebApi.Installers;
 using Asp.Versioning.ApiExplorer;
 using Cortside.AspNetCore;
 using Cortside.AspNetCore.AccessControl;
@@ -15,8 +9,9 @@ using Cortside.AspNetCore.Common;
 using Cortside.AspNetCore.EntityFramework;
 using Cortside.AspNetCore.Filters;
 using Cortside.AspNetCore.Swagger;
-using Cortside.DomainEvent;
-using Cortside.DomainEvent.EntityFramework;
+using Cortside.Authorization.BootStrap;
+using Cortside.Authorization.Data;
+using Cortside.Authorization.WebApi.Installers;
 using Cortside.Health;
 using Microsoft.ApplicationInsights.AspNetCore.Extensions;
 using Microsoft.AspNetCore.Builder;
@@ -77,17 +72,15 @@ namespace Cortside.Authorization.WebApi {
             // add health services
             services.AddHealth(o => {
                 o.UseConfiguration(Configuration);
-                o.AddCustomCheck("example", typeof(ExampleCheck));
             });
 
             // add domain event receiver with handlers
-            services.AddDomainEventReceiver(o => {
-                o.UseConfiguration(Configuration);
-                o.AddHandler<OrderStateChangedEvent, OrderStateChangedHandler>();
-            });
+            //services.AddDomainEventReceiver(o => {
+            //    o.UseConfiguration(Configuration);
+            //});
 
             // add domain event publish with outbox
-            services.AddDomainEventOutboxPublisher<DatabaseContext>(Configuration);
+            //services.AddDomainEventOutboxPublisher<DatabaseContext>(Configuration);
 
             // add controllers and all of the api defaults
             services.AddApiDefaults(InternalDateTimeHandling.Utc, options => {

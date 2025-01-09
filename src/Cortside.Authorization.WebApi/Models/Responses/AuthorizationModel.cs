@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Cortside.Common.Security;
 
 namespace Cortside.Authorization.WebApi.Models.Responses {
     /// <summary>
@@ -14,10 +13,5 @@ namespace Cortside.Authorization.WebApi.Models.Responses {
         /// Permissions
         /// </summary>
         public List<string> Permissions { get; set; }
-
-        /// <summary>
-        /// Principal
-        /// </summary>
-        public SubjectPrincipal Principal { get; internal set; }
     }
 }

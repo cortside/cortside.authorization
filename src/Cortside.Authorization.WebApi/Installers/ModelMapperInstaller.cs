@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Cortside.Authorization.WebApi.Installers {
     public class ModelMapperInstaller : IInstaller {
         public void Install(IServiceCollection services, IConfiguration configuration) {
-            services.AddSingletonClassesBySuffix<OrderModelMapper>("Mapper");
+            services.AddSingletonClassesBySuffix<PolicyModelMapper>("Mapper");
         }
     }
 }

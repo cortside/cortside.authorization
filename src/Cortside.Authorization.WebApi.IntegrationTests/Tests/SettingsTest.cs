@@ -8,7 +8,7 @@ using Xunit.Abstractions;
 
 namespace Cortside.Authorization.WebApi.IntegrationTests.Tests {
     public class SettingsTest : IClassFixture<IntegrationFixture> {
-        private readonly RestApiClient client;
+        private readonly Cortside.RestApiClient.RestApiClient client;
         private readonly IntegrationFixture api;
 
         public SettingsTest(IntegrationFixture api, ITestOutputHelper output) {

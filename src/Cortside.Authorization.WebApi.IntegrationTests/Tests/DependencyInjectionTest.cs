@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-using Cortside.Authorization.DomainEvent;
 using Cortside.Authorization.Facade;
 using Cortside.Authorization.WebApi.Controllers;
 using Cortside.Health.Controllers;
@@ -31,7 +30,7 @@ namespace Cortside.Authorization.WebApi.IntegrationTests.Tests {
             var controllersAssembly = typeof(HealthController).Assembly;
             var controllers = controllersAssembly.ExportedTypes.Where(x => typeof(ControllerBase).IsAssignableFrom(x) && !x.IsAbstract).ToList();
 
-            controllersAssembly = typeof(AuthorizationController).Assembly;
+            controllersAssembly = typeof(SettingsController).Assembly;
             controllers.AddRange(controllersAssembly.ExportedTypes.Where(x => typeof(ControllerBase).IsAssignableFrom(x) && !x.IsAbstract));
 
             var activator = webApi.Services.GetService<IControllerActivator>();
@@ -73,6 +72,7 @@ namespace Cortside.Authorization.WebApi.IntegrationTests.Tests {
 
                     if (stopwatch.ElapsedMilliseconds > 100) {
                         testOutputHelper.WriteLine($"Resolved controller {controller.GetType()} in {stopwatch.ElapsedMilliseconds}ms");
+                        testOutputHelper.WriteLine($"Slowest: {slowest}");
                     }
                 } catch (Exception e) {
                     testOutputHelper.WriteLine($"Failed to resolve controller {controllerType} due to {e}");
@@ -88,22 +88,12 @@ namespace Cortside.Authorization.WebApi.IntegrationTests.Tests {
             var sp = webApi.Services.GetService<IServiceProvider>();
             var serviceProvider = sp.CreateScope().ServiceProvider;
 
-            int count = FindAndVerifyTypeResolution(typeof(CustomerFacade), serviceProvider);
+            int count = FindAndVerifyTypeResolution(typeof(PolicyFacade), serviceProvider);
 
             // assert that types were found and no exceptions happened before now
             count.Should().BePositive();
         }
 
-        [Fact]
-        public void VerifyHandlerResolution() {
-            var sp = webApi.Services.GetService<IServiceProvider>();
-            var serviceProvider = sp.CreateScope().ServiceProvider;
-
-            int count = FindAndVerifyTypeResolution(typeof(OrderStateChangedHandler), serviceProvider);
-
-            // assert that types were found and no exceptions happened before now
-            count.Should().BePositive();
-        }
 
         private int FindAndVerifyTypeResolution(Type t, IServiceProvider serviceProvider) {
             var types = new HashSet<Type>();

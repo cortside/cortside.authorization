@@ -16,7 +16,7 @@ namespace Cortside.Authorization.Domain.Entities {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Comment("Auto incrementing id that is for internal use only")]
-        public int Id { get; private set; }
+        public int RoleId { get; private set; }
 
         [Column(TypeName = "nvarchar(100)")]
         [Comment("Name of the Role")]
@@ -31,7 +31,7 @@ namespace Cortside.Authorization.Domain.Entities {
         public int PolicyId { get; private set; }
         public Policy Policy { get; private set; }
 
-        private readonly List<Permission> permissions = [];
-        public virtual IReadOnlyList<Permission> Permissions => permissions;
+        private readonly List<RolePermission> rolePermissions = [];
+        public virtual IReadOnlyList<RolePermission> RolePermissions => rolePermissions;
     }
 }

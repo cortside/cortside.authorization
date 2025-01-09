@@ -7,8 +7,8 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Cortside.Authorization.BootStrap.Installer {
     public class FacadeInstaller : IInstaller {
         public void Install(IServiceCollection services, IConfiguration configuration) {
-            services.AddScopedInterfacesBySuffix<OrderFacade>("Facade");
-            services.AddSingletonClassesBySuffix<OrderMapper>("Mapper");
+            services.AddScopedInterfacesBySuffix<PolicyFacade>("Facade");
+            services.AddSingletonClassesBySuffix<PolicyMapper>("Mapper");
         }
     }
 }

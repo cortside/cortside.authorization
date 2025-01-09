@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Cortside.Authorization.Domain.Entities {
 
     [Table("Permission")]
-    [Comment("Permissions within a role")]
+    [Comment("Permissions available within a policy")]
 #pragma warning disable CA1711
     public class Permission : AuditableEntity {
 #pragma warning restore CA1711
@@ -17,7 +17,7 @@ namespace Cortside.Authorization.Domain.Entities {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Comment("Auto incrementing id that is for internal use only")]
-        public int Id { get; private set; }
+        public int PermissionId { get; private set; }
 
         [Column(TypeName = "nvarchar(100)")]
         [Comment("Name of the Permission")]
@@ -27,9 +27,9 @@ namespace Cortside.Authorization.Domain.Entities {
         [Comment("Permission description")]
         public string Description { get; private set; }
 
-        [ForeignKey(nameof(RoleId))]
-        [Comment("FK to Role")]
-        public int RoleId { get; private set; }
-        public Role Role { get; private set; }
+        [ForeignKey(nameof(PolicyId))]
+        [Comment("FK to Policy")]
+        public int PolicyId { get; private set; }
+        public Policy Policy { get; private set; }
     }
 }

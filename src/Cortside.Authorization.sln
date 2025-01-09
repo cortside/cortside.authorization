@@ -39,8 +39,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cortside.Authorization.Faca
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cortside.Authorization.Enumerations", "Cortside.Authorization.Enumerations\Cortside.Authorization.Enumerations.csproj", "{E6DEC066-4C26-429B-AE77-24EB10B37B01}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cortside.Authorization.TestUtilities", "Cortside.Authorization.TestUtilities\Cortside.Authorization.TestUtilities.csproj", "{9221604F-4C57-4FB3-BD42-6BD040B5485C}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -231,18 +229,6 @@ Global
 		{E6DEC066-4C26-429B-AE77-24EB10B37B01}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E6DEC066-4C26-429B-AE77-24EB10B37B01}.Staging|Any CPU.ActiveCfg = Debug|Any CPU
 		{E6DEC066-4C26-429B-AE77-24EB10B37B01}.Staging|Any CPU.Build.0 = Debug|Any CPU
-		{9221604F-4C57-4FB3-BD42-6BD040B5485C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9221604F-4C57-4FB3-BD42-6BD040B5485C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9221604F-4C57-4FB3-BD42-6BD040B5485C}.Develop|Any CPU.ActiveCfg = Debug|Any CPU
-		{9221604F-4C57-4FB3-BD42-6BD040B5485C}.Develop|Any CPU.Build.0 = Debug|Any CPU
-		{9221604F-4C57-4FB3-BD42-6BD040B5485C}.Production|Any CPU.ActiveCfg = Debug|Any CPU
-		{9221604F-4C57-4FB3-BD42-6BD040B5485C}.Production|Any CPU.Build.0 = Debug|Any CPU
-		{9221604F-4C57-4FB3-BD42-6BD040B5485C}.QA|Any CPU.ActiveCfg = Debug|Any CPU
-		{9221604F-4C57-4FB3-BD42-6BD040B5485C}.QA|Any CPU.Build.0 = Debug|Any CPU
-		{9221604F-4C57-4FB3-BD42-6BD040B5485C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9221604F-4C57-4FB3-BD42-6BD040B5485C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9221604F-4C57-4FB3-BD42-6BD040B5485C}.Staging|Any CPU.ActiveCfg = Debug|Any CPU
-		{9221604F-4C57-4FB3-BD42-6BD040B5485C}.Staging|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

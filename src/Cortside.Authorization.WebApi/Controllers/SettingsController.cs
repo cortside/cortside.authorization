@@ -1,6 +1,6 @@
 using System;
-using Cortside.Authorization.WebApi.Models.Responses;
 using Asp.Versioning;
+using Cortside.Authorization.WebApi.Models.Responses;
 using Cortside.Health.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -39,9 +39,6 @@ namespace Cortside.Authorization.WebApi.Controllers {
         }
 
         private SettingsModel GetSettingsModel() {
-            var serviceBus = Configuration.GetSection("ServiceBus");
-            var authConfig = Configuration.GetSection("IdentityServer");
-            var policyServer = Configuration.GetSection("PolicyServer");
             var build = Configuration.GetSection("Build");
 
             return new SettingsModel() {
@@ -52,20 +49,7 @@ namespace Cortside.Authorization.WebApi.Controllers {
                     Suffix = build.GetValue<string>("suffix")
                 },
                 Configuration = new ConfigurationModel() {
-                    ServiceBus = new ServiceBusModel {
-                        Exchange = serviceBus.GetValue<string>("Exchange"),
-                        NameSpace = serviceBus.GetValue<string>("Namespace"),
-                        Queue = serviceBus.GetValue<string>("Queue"),
-                    },
-                    IdentityServer = new IdentityServerModel {
-                        Apiname = authConfig.GetValue<string>("ApiName"),
-                        Authority = authConfig.GetValue<string>("Authority"),
-                        BaseUrl = authConfig.GetValue<string>("BaseUrl")
-                    },
-                    PolicyServer = new PolicyServerModel {
-                        BasePolicy = policyServer.GetValue<string>("BasePolicy"),
-                        Url = policyServer.GetValue<string>("PolicyServerUrl"),
-                    }
+
                 },
                 Service = Configuration["Service:Name"]
             };
