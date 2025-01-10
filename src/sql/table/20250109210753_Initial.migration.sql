@@ -40,6 +40,9 @@ BEGIN
     EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', N'dbo', 'TABLE', N'Subject', 'COLUMN', N'UserPrincipalName';
     SET @description = N'Date and time entity was created';
     EXEC sp_addextendedproperty 'MS_Description', @description, 'SCHEMA', N'dbo', 'TABLE', N'Subject', 'COLUMN', N'CreatedDate';
+
+    INSERT INTO Subject (SubjectId, Name, GivenName, FamilyName, UserPrincipalName, CreatedDate)
+    VALUES ('00000000-0000-0000-0000-000000000000', 'Anonymous', 'Anonymous', 'Anonymous', 'Anonymous', GETDATE())
 END;
 
 IF NOT EXISTS (
