@@ -1,13 +1,13 @@
 {
-  "build": {
-    "configuration": "Debug",
-    "nugetfeed": "https://api.nuget.org/v3/index.json",
-    "publishableProject": "Cortside.Authorization.WebApi"
+  "version": "1.0",
+  "service": "authorization-api",
+  "repository": {
+    "name": "Cortside.Authorization"
   },
   "database": {
+    "name": "Authorization",
     "dbContext": "DatabaseContext",
     "dbContextProject": "src/Cortside.Authorization.Data",
-    "name": "AuthorizationDev",
     "startupProject": "src/Cortside.Authorization.WebApi",
     "triggers": {
       "excludeTables": [
@@ -19,14 +19,21 @@
     }
   },
   "docker": {
-    "buildImage": "cortside.azurecr.io/dotnet-sdk:8.0-alpine",
-    "executable": "Cortside.Authorization.WebApi",
-    "image": "cortside.azurecr.io/authorization",
-    "runtimeImage": "cortside.azurecr.io/dotnet-runtime:8.0-alpine"
+    "buildImage": "cortside/dotnet-sdk:8.0-alpine",
+    "runtimeImage": "cortside/dotnet-runtime:8.0-alpine",
+    "image": "cortside/authorization-api",
+    "executable": "Cortside.Authorization.WebApi"
   },
-  "repository": {
-    "name": "Cortside.Authorization"
+  "build": {
+    "configuration": "Debug",
+    "nugetfeed": "https://api.nuget.org/v3/index.json",
+    "publishableProject": "Cortside.Authorization.WebApi"
   },
-  "service": "authorization",
-  "version": "1.63"
+  "sonar": {
+    "organization": "cortside",
+    "key": "cortside_cortside.authorization",
+    "host": "https://sonarcloud.io",
+    "token": "",
+    "propertyPrefix": "/d:"
+  }
 }
