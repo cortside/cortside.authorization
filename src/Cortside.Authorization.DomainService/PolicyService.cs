@@ -17,10 +17,10 @@ namespace Cortside.Authorization.DomainService {
         }
 
         public async Task<IList<Role>> GetRolesByClaimsAsync(EvaluatePolicyDto dto) {
-            logger.LogDebug("getting roles by claims for policy {Policy}", dto.PolicyName);
+            logger.LogDebug("getting roles by claims for policy {Policy}", dto.PolicyResourceId);
             //Guard.Against(() => dto.Claims.Where(x => x.Type == "iss" && x.Value == config.Authority)); // need this?
             var claims = dto.Claims.Select(x => new KeyValuePair<string, string>(x.Type, x.Value));
-            var entityList = await policyRepository.GetRolesByClaimsAsync(dto.PolicyName, claims).ConfigureAwait(false);
+            var entityList = await policyRepository.GetRolesByClaimsAsync(dto.PolicyResourceId, claims).ConfigureAwait(false);
             return entityList;
         }
 

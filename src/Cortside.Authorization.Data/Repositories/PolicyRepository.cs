@@ -20,14 +20,14 @@ namespace Cortside.Authorization.Data.Repositories {
             return entity.Entity;
         }
 
-        public async Task<IList<Role>> GetRolesByClaimsAsync(string policyName, IEnumerable<KeyValuePair<string, string>> userClaims) {
+        public async Task<IList<Role>> GetRolesByClaimsAsync(Guid policyResourceId, IEnumerable<KeyValuePair<string, string>> userClaims) {
             // get the assigned role userClaims for the policy from the db
             var claimTypes = new List<string>(userClaims.Select(x => x.Key));
             var assigned = await context.PolicyRoleClaims
                 .Include(x => x.Role)
                 .ThenInclude(x => x.RolePermissions)
                 .ThenInclude(rp => rp.Permission)
-                .Where(x => x.Role.Policy.Name == policyName
+                .Where(x => x.Role.Policy.PolicyResourceId == policyResourceId
                     && claimTypes.Contains(x.ClaimType))
                 .ToListAsync();
 

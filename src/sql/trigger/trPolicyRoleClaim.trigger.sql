@@ -44,22 +44,41 @@ CREATE TRIGGER trPolicyRoleClaim
 	)
 	Set @AuditLogTransactionId = SCOPE_IDENTITY()
 
-	-- [Id]
-	IF UPDATE([Id]) OR @action in ('INSERT', 'DELETE')      
+	-- [PolicyRoleClaimId]
+	IF UPDATE([PolicyRoleClaimId]) OR @action in ('INSERT', 'DELETE')      
 		BEGIN       
 			INSERT INTO audit.AuditLog (AuditLogTransactionId, PrimaryKey, ColumnName, OldValue, NewValue, Key1)
 			SELECT
 				@AuditLogTransactionId,
-				convert(nvarchar(1500), IsNull('[[Id]]='+CONVERT(nvarchar(4000), IsNull(OLD.[Id], NEW.[Id]), 0), '[[Id]] Is Null')),
-				'[Id]',
-				CONVERT(nvarchar(4000), OLD.[Id], 126),
-				CONVERT(nvarchar(4000), NEW.[Id], 126),
-				convert(nvarchar(4000), COALESCE(OLD.[Id], NEW.[Id], null))
+				convert(nvarchar(1500), IsNull('[[PolicyRoleClaimId]]='+CONVERT(nvarchar(4000), IsNull(OLD.[PolicyRoleClaimId], NEW.[PolicyRoleClaimId]), 0), '[[PolicyRoleClaimId]] Is Null')),
+				'[PolicyRoleClaimId]',
+				CONVERT(nvarchar(4000), OLD.[PolicyRoleClaimId], 126),
+				CONVERT(nvarchar(4000), NEW.[PolicyRoleClaimId], 126),
+				convert(nvarchar(4000), COALESCE(OLD.[PolicyRoleClaimId], NEW.[PolicyRoleClaimId], null))
 			FROM deleted OLD 
-			LEFT JOIN inserted NEW On (NEW.[Id] = OLD.[Id] or (NEW.[Id] Is Null and OLD.[Id] Is Null))
-			WHERE ((NEW.[Id] <> OLD.[Id]) 
-					Or (NEW.[Id] Is Null And OLD.[Id] Is Not Null)
-					Or (NEW.[Id] Is Not Null And OLD.[Id] Is Null))
+			LEFT JOIN inserted NEW On (NEW.[PolicyRoleClaimId] = OLD.[PolicyRoleClaimId] or (NEW.[PolicyRoleClaimId] Is Null and OLD.[PolicyRoleClaimId] Is Null))
+			WHERE ((NEW.[PolicyRoleClaimId] <> OLD.[PolicyRoleClaimId]) 
+					Or (NEW.[PolicyRoleClaimId] Is Null And OLD.[PolicyRoleClaimId] Is Not Null)
+					Or (NEW.[PolicyRoleClaimId] Is Not Null And OLD.[PolicyRoleClaimId] Is Null))
+			set @inserted = @inserted + @@ROWCOUNT
+		END
+
+	-- [PolicyRoleClaimResourceId]
+	IF UPDATE([PolicyRoleClaimResourceId]) OR @action in ('INSERT', 'DELETE')      
+		BEGIN       
+			INSERT INTO audit.AuditLog (AuditLogTransactionId, PrimaryKey, ColumnName, OldValue, NewValue, Key1)
+			SELECT
+				@AuditLogTransactionId,
+				convert(nvarchar(1500), IsNull('[[PolicyRoleClaimId]]='+CONVERT(nvarchar(4000), IsNull(OLD.[PolicyRoleClaimId], NEW.[PolicyRoleClaimId]), 0), '[[PolicyRoleClaimId]] Is Null')),
+				'[PolicyRoleClaimResourceId]',
+				CONVERT(nvarchar(4000), OLD.[PolicyRoleClaimResourceId], 126),
+				CONVERT(nvarchar(4000), NEW.[PolicyRoleClaimResourceId], 126),
+				convert(nvarchar(4000), COALESCE(OLD.[PolicyRoleClaimId], NEW.[PolicyRoleClaimId], null))
+			FROM deleted OLD 
+			LEFT JOIN inserted NEW On (NEW.[PolicyRoleClaimId] = OLD.[PolicyRoleClaimId] or (NEW.[PolicyRoleClaimId] Is Null and OLD.[PolicyRoleClaimId] Is Null))
+			WHERE ((NEW.[PolicyRoleClaimResourceId] <> OLD.[PolicyRoleClaimResourceId]) 
+					Or (NEW.[PolicyRoleClaimResourceId] Is Null And OLD.[PolicyRoleClaimResourceId] Is Not Null)
+					Or (NEW.[PolicyRoleClaimResourceId] Is Not Null And OLD.[PolicyRoleClaimResourceId] Is Null))
 			set @inserted = @inserted + @@ROWCOUNT
 		END
 
@@ -69,13 +88,13 @@ CREATE TRIGGER trPolicyRoleClaim
 			INSERT INTO audit.AuditLog (AuditLogTransactionId, PrimaryKey, ColumnName, OldValue, NewValue, Key1)
 			SELECT
 				@AuditLogTransactionId,
-				convert(nvarchar(1500), IsNull('[[Id]]='+CONVERT(nvarchar(4000), IsNull(OLD.[Id], NEW.[Id]), 0), '[[Id]] Is Null')),
+				convert(nvarchar(1500), IsNull('[[PolicyRoleClaimId]]='+CONVERT(nvarchar(4000), IsNull(OLD.[PolicyRoleClaimId], NEW.[PolicyRoleClaimId]), 0), '[[PolicyRoleClaimId]] Is Null')),
 				'[ClaimType]',
 				CONVERT(nvarchar(4000), OLD.[ClaimType], 126),
 				CONVERT(nvarchar(4000), NEW.[ClaimType], 126),
-				convert(nvarchar(4000), COALESCE(OLD.[Id], NEW.[Id], null))
+				convert(nvarchar(4000), COALESCE(OLD.[PolicyRoleClaimId], NEW.[PolicyRoleClaimId], null))
 			FROM deleted OLD 
-			LEFT JOIN inserted NEW On (NEW.[Id] = OLD.[Id] or (NEW.[Id] Is Null and OLD.[Id] Is Null))
+			LEFT JOIN inserted NEW On (NEW.[PolicyRoleClaimId] = OLD.[PolicyRoleClaimId] or (NEW.[PolicyRoleClaimId] Is Null and OLD.[PolicyRoleClaimId] Is Null))
 			WHERE ((NEW.[ClaimType] <> OLD.[ClaimType]) 
 					Or (NEW.[ClaimType] Is Null And OLD.[ClaimType] Is Not Null)
 					Or (NEW.[ClaimType] Is Not Null And OLD.[ClaimType] Is Null))
@@ -88,13 +107,13 @@ CREATE TRIGGER trPolicyRoleClaim
 			INSERT INTO audit.AuditLog (AuditLogTransactionId, PrimaryKey, ColumnName, OldValue, NewValue, Key1)
 			SELECT
 				@AuditLogTransactionId,
-				convert(nvarchar(1500), IsNull('[[Id]]='+CONVERT(nvarchar(4000), IsNull(OLD.[Id], NEW.[Id]), 0), '[[Id]] Is Null')),
+				convert(nvarchar(1500), IsNull('[[PolicyRoleClaimId]]='+CONVERT(nvarchar(4000), IsNull(OLD.[PolicyRoleClaimId], NEW.[PolicyRoleClaimId]), 0), '[[PolicyRoleClaimId]] Is Null')),
 				'[Value]',
 				CONVERT(nvarchar(4000), OLD.[Value], 126),
 				CONVERT(nvarchar(4000), NEW.[Value], 126),
-				convert(nvarchar(4000), COALESCE(OLD.[Id], NEW.[Id], null))
+				convert(nvarchar(4000), COALESCE(OLD.[PolicyRoleClaimId], NEW.[PolicyRoleClaimId], null))
 			FROM deleted OLD 
-			LEFT JOIN inserted NEW On (NEW.[Id] = OLD.[Id] or (NEW.[Id] Is Null and OLD.[Id] Is Null))
+			LEFT JOIN inserted NEW On (NEW.[PolicyRoleClaimId] = OLD.[PolicyRoleClaimId] or (NEW.[PolicyRoleClaimId] Is Null and OLD.[PolicyRoleClaimId] Is Null))
 			WHERE ((NEW.[Value] <> OLD.[Value]) 
 					Or (NEW.[Value] Is Null And OLD.[Value] Is Not Null)
 					Or (NEW.[Value] Is Not Null And OLD.[Value] Is Null))
@@ -107,13 +126,13 @@ CREATE TRIGGER trPolicyRoleClaim
 			INSERT INTO audit.AuditLog (AuditLogTransactionId, PrimaryKey, ColumnName, OldValue, NewValue, Key1)
 			SELECT
 				@AuditLogTransactionId,
-				convert(nvarchar(1500), IsNull('[[Id]]='+CONVERT(nvarchar(4000), IsNull(OLD.[Id], NEW.[Id]), 0), '[[Id]] Is Null')),
+				convert(nvarchar(1500), IsNull('[[PolicyRoleClaimId]]='+CONVERT(nvarchar(4000), IsNull(OLD.[PolicyRoleClaimId], NEW.[PolicyRoleClaimId]), 0), '[[PolicyRoleClaimId]] Is Null')),
 				'[Description]',
 				CONVERT(nvarchar(4000), OLD.[Description], 126),
 				CONVERT(nvarchar(4000), NEW.[Description], 126),
-				convert(nvarchar(4000), COALESCE(OLD.[Id], NEW.[Id], null))
+				convert(nvarchar(4000), COALESCE(OLD.[PolicyRoleClaimId], NEW.[PolicyRoleClaimId], null))
 			FROM deleted OLD 
-			LEFT JOIN inserted NEW On (NEW.[Id] = OLD.[Id] or (NEW.[Id] Is Null and OLD.[Id] Is Null))
+			LEFT JOIN inserted NEW On (NEW.[PolicyRoleClaimId] = OLD.[PolicyRoleClaimId] or (NEW.[PolicyRoleClaimId] Is Null and OLD.[PolicyRoleClaimId] Is Null))
 			WHERE ((NEW.[Description] <> OLD.[Description]) 
 					Or (NEW.[Description] Is Null And OLD.[Description] Is Not Null)
 					Or (NEW.[Description] Is Not Null And OLD.[Description] Is Null))
@@ -126,13 +145,13 @@ CREATE TRIGGER trPolicyRoleClaim
 			INSERT INTO audit.AuditLog (AuditLogTransactionId, PrimaryKey, ColumnName, OldValue, NewValue, Key1)
 			SELECT
 				@AuditLogTransactionId,
-				convert(nvarchar(1500), IsNull('[[Id]]='+CONVERT(nvarchar(4000), IsNull(OLD.[Id], NEW.[Id]), 0), '[[Id]] Is Null')),
+				convert(nvarchar(1500), IsNull('[[PolicyRoleClaimId]]='+CONVERT(nvarchar(4000), IsNull(OLD.[PolicyRoleClaimId], NEW.[PolicyRoleClaimId]), 0), '[[PolicyRoleClaimId]] Is Null')),
 				'[RoleId]',
 				CONVERT(nvarchar(4000), OLD.[RoleId], 126),
 				CONVERT(nvarchar(4000), NEW.[RoleId], 126),
-				convert(nvarchar(4000), COALESCE(OLD.[Id], NEW.[Id], null))
+				convert(nvarchar(4000), COALESCE(OLD.[PolicyRoleClaimId], NEW.[PolicyRoleClaimId], null))
 			FROM deleted OLD 
-			LEFT JOIN inserted NEW On (NEW.[Id] = OLD.[Id] or (NEW.[Id] Is Null and OLD.[Id] Is Null))
+			LEFT JOIN inserted NEW On (NEW.[PolicyRoleClaimId] = OLD.[PolicyRoleClaimId] or (NEW.[PolicyRoleClaimId] Is Null and OLD.[PolicyRoleClaimId] Is Null))
 			WHERE ((NEW.[RoleId] <> OLD.[RoleId]) 
 					Or (NEW.[RoleId] Is Null And OLD.[RoleId] Is Not Null)
 					Or (NEW.[RoleId] Is Not Null And OLD.[RoleId] Is Null))
@@ -145,13 +164,13 @@ CREATE TRIGGER trPolicyRoleClaim
 			INSERT INTO audit.AuditLog (AuditLogTransactionId, PrimaryKey, ColumnName, OldValue, NewValue, Key1)
 			SELECT
 				@AuditLogTransactionId,
-				convert(nvarchar(1500), IsNull('[[Id]]='+CONVERT(nvarchar(4000), IsNull(OLD.[Id], NEW.[Id]), 0), '[[Id]] Is Null')),
+				convert(nvarchar(1500), IsNull('[[PolicyRoleClaimId]]='+CONVERT(nvarchar(4000), IsNull(OLD.[PolicyRoleClaimId], NEW.[PolicyRoleClaimId]), 0), '[[PolicyRoleClaimId]] Is Null')),
 				'[CreatedDate]',
 				CONVERT(nvarchar(4000), OLD.[CreatedDate], 126),
 				CONVERT(nvarchar(4000), NEW.[CreatedDate], 126),
-				convert(nvarchar(4000), COALESCE(OLD.[Id], NEW.[Id], null))
+				convert(nvarchar(4000), COALESCE(OLD.[PolicyRoleClaimId], NEW.[PolicyRoleClaimId], null))
 			FROM deleted OLD 
-			LEFT JOIN inserted NEW On (NEW.[Id] = OLD.[Id] or (NEW.[Id] Is Null and OLD.[Id] Is Null))
+			LEFT JOIN inserted NEW On (NEW.[PolicyRoleClaimId] = OLD.[PolicyRoleClaimId] or (NEW.[PolicyRoleClaimId] Is Null and OLD.[PolicyRoleClaimId] Is Null))
 			WHERE ((NEW.[CreatedDate] <> OLD.[CreatedDate]) 
 					Or (NEW.[CreatedDate] Is Null And OLD.[CreatedDate] Is Not Null)
 					Or (NEW.[CreatedDate] Is Not Null And OLD.[CreatedDate] Is Null))
@@ -164,13 +183,13 @@ CREATE TRIGGER trPolicyRoleClaim
 			INSERT INTO audit.AuditLog (AuditLogTransactionId, PrimaryKey, ColumnName, OldValue, NewValue, Key1)
 			SELECT
 				@AuditLogTransactionId,
-				convert(nvarchar(1500), IsNull('[[Id]]='+CONVERT(nvarchar(4000), IsNull(OLD.[Id], NEW.[Id]), 0), '[[Id]] Is Null')),
+				convert(nvarchar(1500), IsNull('[[PolicyRoleClaimId]]='+CONVERT(nvarchar(4000), IsNull(OLD.[PolicyRoleClaimId], NEW.[PolicyRoleClaimId]), 0), '[[PolicyRoleClaimId]] Is Null')),
 				'[CreatedSubjectId]',
 				CONVERT(nvarchar(4000), OLD.[CreatedSubjectId], 126),
 				CONVERT(nvarchar(4000), NEW.[CreatedSubjectId], 126),
-				convert(nvarchar(4000), COALESCE(OLD.[Id], NEW.[Id], null))
+				convert(nvarchar(4000), COALESCE(OLD.[PolicyRoleClaimId], NEW.[PolicyRoleClaimId], null))
 			FROM deleted OLD 
-			LEFT JOIN inserted NEW On (NEW.[Id] = OLD.[Id] or (NEW.[Id] Is Null and OLD.[Id] Is Null))
+			LEFT JOIN inserted NEW On (NEW.[PolicyRoleClaimId] = OLD.[PolicyRoleClaimId] or (NEW.[PolicyRoleClaimId] Is Null and OLD.[PolicyRoleClaimId] Is Null))
 			WHERE ((NEW.[CreatedSubjectId] <> OLD.[CreatedSubjectId]) 
 					Or (NEW.[CreatedSubjectId] Is Null And OLD.[CreatedSubjectId] Is Not Null)
 					Or (NEW.[CreatedSubjectId] Is Not Null And OLD.[CreatedSubjectId] Is Null))
@@ -183,13 +202,13 @@ CREATE TRIGGER trPolicyRoleClaim
 			INSERT INTO audit.AuditLog (AuditLogTransactionId, PrimaryKey, ColumnName, OldValue, NewValue, Key1)
 			SELECT
 				@AuditLogTransactionId,
-				convert(nvarchar(1500), IsNull('[[Id]]='+CONVERT(nvarchar(4000), IsNull(OLD.[Id], NEW.[Id]), 0), '[[Id]] Is Null')),
+				convert(nvarchar(1500), IsNull('[[PolicyRoleClaimId]]='+CONVERT(nvarchar(4000), IsNull(OLD.[PolicyRoleClaimId], NEW.[PolicyRoleClaimId]), 0), '[[PolicyRoleClaimId]] Is Null')),
 				'[LastModifiedDate]',
 				CONVERT(nvarchar(4000), OLD.[LastModifiedDate], 126),
 				CONVERT(nvarchar(4000), NEW.[LastModifiedDate], 126),
-				convert(nvarchar(4000), COALESCE(OLD.[Id], NEW.[Id], null))
+				convert(nvarchar(4000), COALESCE(OLD.[PolicyRoleClaimId], NEW.[PolicyRoleClaimId], null))
 			FROM deleted OLD 
-			LEFT JOIN inserted NEW On (NEW.[Id] = OLD.[Id] or (NEW.[Id] Is Null and OLD.[Id] Is Null))
+			LEFT JOIN inserted NEW On (NEW.[PolicyRoleClaimId] = OLD.[PolicyRoleClaimId] or (NEW.[PolicyRoleClaimId] Is Null and OLD.[PolicyRoleClaimId] Is Null))
 			WHERE ((NEW.[LastModifiedDate] <> OLD.[LastModifiedDate]) 
 					Or (NEW.[LastModifiedDate] Is Null And OLD.[LastModifiedDate] Is Not Null)
 					Or (NEW.[LastModifiedDate] Is Not Null And OLD.[LastModifiedDate] Is Null))
@@ -202,13 +221,13 @@ CREATE TRIGGER trPolicyRoleClaim
 			INSERT INTO audit.AuditLog (AuditLogTransactionId, PrimaryKey, ColumnName, OldValue, NewValue, Key1)
 			SELECT
 				@AuditLogTransactionId,
-				convert(nvarchar(1500), IsNull('[[Id]]='+CONVERT(nvarchar(4000), IsNull(OLD.[Id], NEW.[Id]), 0), '[[Id]] Is Null')),
+				convert(nvarchar(1500), IsNull('[[PolicyRoleClaimId]]='+CONVERT(nvarchar(4000), IsNull(OLD.[PolicyRoleClaimId], NEW.[PolicyRoleClaimId]), 0), '[[PolicyRoleClaimId]] Is Null')),
 				'[LastModifiedSubjectId]',
 				CONVERT(nvarchar(4000), OLD.[LastModifiedSubjectId], 126),
 				CONVERT(nvarchar(4000), NEW.[LastModifiedSubjectId], 126),
-				convert(nvarchar(4000), COALESCE(OLD.[Id], NEW.[Id], null))
+				convert(nvarchar(4000), COALESCE(OLD.[PolicyRoleClaimId], NEW.[PolicyRoleClaimId], null))
 			FROM deleted OLD 
-			LEFT JOIN inserted NEW On (NEW.[Id] = OLD.[Id] or (NEW.[Id] Is Null and OLD.[Id] Is Null))
+			LEFT JOIN inserted NEW On (NEW.[PolicyRoleClaimId] = OLD.[PolicyRoleClaimId] or (NEW.[PolicyRoleClaimId] Is Null and OLD.[PolicyRoleClaimId] Is Null))
 			WHERE ((NEW.[LastModifiedSubjectId] <> OLD.[LastModifiedSubjectId]) 
 					Or (NEW.[LastModifiedSubjectId] Is Null And OLD.[LastModifiedSubjectId] Is Not Null)
 					Or (NEW.[LastModifiedSubjectId] Is Not Null And OLD.[LastModifiedSubjectId] Is Null))

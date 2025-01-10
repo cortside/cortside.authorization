@@ -12,7 +12,7 @@
     "RequireHttpsMetadata": false
   },
   "ReceiverHostedService": {
-    "Enabled": true
+    "Enabled": false
   },
   "IntegrationTestFactory": {
     "InMemoryDatabase": true

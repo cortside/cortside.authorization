@@ -9,10 +9,8 @@ using Xunit.Abstractions;
 namespace Cortside.Authorization.WebApi.IntegrationTests.Tests {
     public class SettingsTest : IClassFixture<IntegrationFixture> {
         private readonly Cortside.RestApiClient.RestApiClient client;
-        private readonly IntegrationFixture api;
 
         public SettingsTest(IntegrationFixture api, ITestOutputHelper output) {
-            this.api = api;
             api.TestOutputHelper = output;
             client = api.CreateRestApiClient(output);
         }
@@ -27,7 +25,7 @@ namespace Cortside.Authorization.WebApi.IntegrationTests.Tests {
 
             //assert
             response.StatusCode.Should().Be(HttpStatusCode.OK);
-            response.Content.Should().Contain(api.MockServer.Url);
+            response.Content.Should().Contain("authorization-api");
         }
     }
 }

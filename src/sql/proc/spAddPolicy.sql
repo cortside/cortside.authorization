@@ -1,11 +1,12 @@
 CREATE OR ALTER PROCEDURE spAddPolicy
     @PolicyName varchar(100),
+    @PolicyResourceId uniqueidentifier,
     @Description varchar(255)
 AS
 BEGIN
     -- Error handling
     BEGIN TRY
-        -- Check if the PolicyName is valid
+        -- Check if arguments are valid
         IF @PolicyName IS NULL
         BEGIN
             RAISERROR('Invalid PolicyName', 16, 1);
@@ -19,6 +20,7 @@ BEGIN
         BEGIN
             INSERT INTO [dbo].[Policy]
                 ([Name]
+                ,[PolicyResourceId]
                 ,[Description]
                 ,[CreatedDate]
                 ,[CreatedSubjectId]
@@ -26,6 +28,7 @@ BEGIN
                 ,[LastModifiedSubjectId])
             VALUES
                 (@PolicyName --<Name, nvarchar(100),>
+                ,@PolicyResourceId
                 ,@Description --<Description, nvarchar(255),>
                 ,getutcdate() --<CreatedDate, datetime2(7),>
                 ,@EmptyGuid --<CreatedSubjectId, uniqueidentifier,>
@@ -37,8 +40,6 @@ BEGIN
         BEGIN
             UPDATE [dbo].[Policy]
                 SET [Description] = @Description
-                    -- LastModifiedDate = getutcdate(),
-                    -- LastModifiedSubjectId = @EmptyGuid
             WHERE [Name] = @PolicyName
         END
 

@@ -1,10 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Cortside.AspNetCore.Auditable.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Cortside.Authorization.Domain.Entities {
-
+    [Index(nameof(PermissionResourceId), IsUnique = true)]
     [Table("Permission")]
     [Comment("Permissions available within a policy")]
 #pragma warning disable CA1711
@@ -13,11 +14,21 @@ namespace Cortside.Authorization.Domain.Entities {
 
         protected Permission() { }
 
+        public Permission(string name, string description, Policy policy) {
+            PermissionResourceId = Guid.NewGuid();
+            Name = name;
+            Description = description;
+            Policy = policy;
+        }
+
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Comment("Auto incrementing id that is for internal use only")]
         public int PermissionId { get; private set; }
+
+        [Comment("Public unique identifier")]
+        public Guid PermissionResourceId { get; private set; } = Guid.NewGuid();
 
         [Column(TypeName = "nvarchar(100)")]
         [Comment("Name of the Permission")]

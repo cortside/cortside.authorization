@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Cortside.Authorization.Domain.Entities;
@@ -5,6 +6,6 @@ using Cortside.Authorization.Domain.Entities;
 namespace Cortside.Authorization.Data.Repositories {
     public interface IPolicyRepository {
         Task<Policy> AddAsync(Policy policy);
-        Task<IList<Role>> GetRolesByClaimsAsync(string policyName, IEnumerable<KeyValuePair<string, string>> userClaims);
+        Task<IList<Role>> GetRolesByClaimsAsync(Guid policyResourceId, IEnumerable<KeyValuePair<string, string>> userClaims);
     }
 }

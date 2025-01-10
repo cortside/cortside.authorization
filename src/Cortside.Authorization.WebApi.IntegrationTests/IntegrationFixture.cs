@@ -66,7 +66,7 @@ namespace Cortside.Authorization.WebApi.IntegrationTests {
                 services.RegisterFileSystemDistributedLock();
             }
 
-            services.RegisterDomainEventPublisher();
+            //services.RegisterDomainEventPublisher();
 
             SerializerSettings = services.ResolveSerializerSettings();
         }

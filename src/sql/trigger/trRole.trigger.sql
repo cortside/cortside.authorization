@@ -63,6 +63,25 @@ CREATE TRIGGER trRole
 			set @inserted = @inserted + @@ROWCOUNT
 		END
 
+	-- [RoleResourceId]
+	IF UPDATE([RoleResourceId]) OR @action in ('INSERT', 'DELETE')      
+		BEGIN       
+			INSERT INTO audit.AuditLog (AuditLogTransactionId, PrimaryKey, ColumnName, OldValue, NewValue, Key1)
+			SELECT
+				@AuditLogTransactionId,
+				convert(nvarchar(1500), IsNull('[[RoleId]]='+CONVERT(nvarchar(4000), IsNull(OLD.[RoleId], NEW.[RoleId]), 0), '[[RoleId]] Is Null')),
+				'[RoleResourceId]',
+				CONVERT(nvarchar(4000), OLD.[RoleResourceId], 126),
+				CONVERT(nvarchar(4000), NEW.[RoleResourceId], 126),
+				convert(nvarchar(4000), COALESCE(OLD.[RoleId], NEW.[RoleId], null))
+			FROM deleted OLD 
+			LEFT JOIN inserted NEW On (NEW.[RoleId] = OLD.[RoleId] or (NEW.[RoleId] Is Null and OLD.[RoleId] Is Null))
+			WHERE ((NEW.[RoleResourceId] <> OLD.[RoleResourceId]) 
+					Or (NEW.[RoleResourceId] Is Null And OLD.[RoleResourceId] Is Not Null)
+					Or (NEW.[RoleResourceId] Is Not Null And OLD.[RoleResourceId] Is Null))
+			set @inserted = @inserted + @@ROWCOUNT
+		END
+
 	-- [Name]
 	IF UPDATE([Name]) OR @action in ('INSERT', 'DELETE')      
 		BEGIN       

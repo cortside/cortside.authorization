@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Cortside.Authorization.Dto {
     public class EvaluatePolicyDto {
-        public string PolicyName { get; set; }
         public List<ClaimDto> Claims { get; set; } = [];
+        public Guid PolicyResourceId { get; set; }
     }
 }

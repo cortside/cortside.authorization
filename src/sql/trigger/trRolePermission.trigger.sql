@@ -63,6 +63,25 @@ CREATE TRIGGER trRolePermission
 			set @inserted = @inserted + @@ROWCOUNT
 		END
 
+	-- [RolePermissionResourceId]
+	IF UPDATE([RolePermissionResourceId]) OR @action in ('INSERT', 'DELETE')      
+		BEGIN       
+			INSERT INTO audit.AuditLog (AuditLogTransactionId, PrimaryKey, ColumnName, OldValue, NewValue, Key1)
+			SELECT
+				@AuditLogTransactionId,
+				convert(nvarchar(1500), IsNull('[[RolePermissionId]]='+CONVERT(nvarchar(4000), IsNull(OLD.[RolePermissionId], NEW.[RolePermissionId]), 0), '[[RolePermissionId]] Is Null')),
+				'[RolePermissionResourceId]',
+				CONVERT(nvarchar(4000), OLD.[RolePermissionResourceId], 126),
+				CONVERT(nvarchar(4000), NEW.[RolePermissionResourceId], 126),
+				convert(nvarchar(4000), COALESCE(OLD.[RolePermissionId], NEW.[RolePermissionId], null))
+			FROM deleted OLD 
+			LEFT JOIN inserted NEW On (NEW.[RolePermissionId] = OLD.[RolePermissionId] or (NEW.[RolePermissionId] Is Null and OLD.[RolePermissionId] Is Null))
+			WHERE ((NEW.[RolePermissionResourceId] <> OLD.[RolePermissionResourceId]) 
+					Or (NEW.[RolePermissionResourceId] Is Null And OLD.[RolePermissionResourceId] Is Not Null)
+					Or (NEW.[RolePermissionResourceId] Is Not Null And OLD.[RolePermissionResourceId] Is Null))
+			set @inserted = @inserted + @@ROWCOUNT
+		END
+
 	-- [RoleId]
 	IF UPDATE([RoleId]) OR @action in ('INSERT', 'DELETE')      
 		BEGIN       

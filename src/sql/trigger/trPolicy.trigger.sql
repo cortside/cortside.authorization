@@ -63,6 +63,25 @@ CREATE TRIGGER trPolicy
 			set @inserted = @inserted + @@ROWCOUNT
 		END
 
+	-- [PolicyResourceId]
+	IF UPDATE([PolicyResourceId]) OR @action in ('INSERT', 'DELETE')      
+		BEGIN       
+			INSERT INTO audit.AuditLog (AuditLogTransactionId, PrimaryKey, ColumnName, OldValue, NewValue, Key1)
+			SELECT
+				@AuditLogTransactionId,
+				convert(nvarchar(1500), IsNull('[[PolicyId]]='+CONVERT(nvarchar(4000), IsNull(OLD.[PolicyId], NEW.[PolicyId]), 0), '[[PolicyId]] Is Null')),
+				'[PolicyResourceId]',
+				CONVERT(nvarchar(4000), OLD.[PolicyResourceId], 126),
+				CONVERT(nvarchar(4000), NEW.[PolicyResourceId], 126),
+				convert(nvarchar(4000), COALESCE(OLD.[PolicyId], NEW.[PolicyId], null))
+			FROM deleted OLD 
+			LEFT JOIN inserted NEW On (NEW.[PolicyId] = OLD.[PolicyId] or (NEW.[PolicyId] Is Null and OLD.[PolicyId] Is Null))
+			WHERE ((NEW.[PolicyResourceId] <> OLD.[PolicyResourceId]) 
+					Or (NEW.[PolicyResourceId] Is Null And OLD.[PolicyResourceId] Is Not Null)
+					Or (NEW.[PolicyResourceId] Is Not Null And OLD.[PolicyResourceId] Is Null))
+			set @inserted = @inserted + @@ROWCOUNT
+		END
+
 	-- [Name]
 	IF UPDATE([Name]) OR @action in ('INSERT', 'DELETE')      
 		BEGIN       

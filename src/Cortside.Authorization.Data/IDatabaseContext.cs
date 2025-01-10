@@ -8,6 +8,8 @@ namespace Cortside.Authorization.Data {
         DbSet<Policy> Policies { get; set; }
         DbSet<Role> Roles { get; set; }
         DbSet<PolicyRoleClaim> PolicyRoleClaims { get; set; }
+        DbSet<RolePermission> RolePermissions { get; set; }
+        DbSet<Permission> Permissions { get; set; }
 
         void RemoveRange(IEnumerable<object> entities);
         EntityEntry Remove(object entity);

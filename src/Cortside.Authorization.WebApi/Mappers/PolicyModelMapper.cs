@@ -1,5 +1,6 @@
 #pragma warning disable CS1591 // Missing XML comments
 
+using System;
 using Cortside.Authorization.Dto;
 using Cortside.Authorization.WebApi.Models;
 using Cortside.Authorization.WebApi.Models.Requests;
@@ -13,9 +14,9 @@ namespace Cortside.Authorization.WebApi.Mappers {
 
 
 
-        internal EvaluatePolicyDto MapToDto(EvaluatePolicyRequest request, string policyName) {
+        internal EvaluatePolicyDto MapToDto(EvaluatePolicyRequest request, Guid resourceId) {
             return new EvaluatePolicyDto {
-                PolicyName = policyName,
+                PolicyResourceId = resourceId,
                 Claims = request.Claims.ConvertAll(Map),
             };
         }

@@ -1,7 +1,8 @@
 declare @PolicyName varchar(100) = 'Catalog'
+declare @PolicyResourceId uniqueidentifier = '15F50AAB-5FBD-406E-A1E0-BDC961B4CDBA' -- used in appsettings.json of calling services
 
 -- upsert policy
-exec spAddPolicy @PolicyName, 'Policy for catalog service'
+exec spAddPolicy @PolicyName, @PolicyResourceId, 'Policy for catalog service'
 
 -- add roles
 exec spAddRole @PolicyName, 'Read', 'Has permissions to read service resources'

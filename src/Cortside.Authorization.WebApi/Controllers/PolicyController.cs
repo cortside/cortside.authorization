@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using Asp.Versioning;
 using Cortside.Authorization.Facade;
@@ -15,15 +16,15 @@ namespace Cortside.Authorization.WebApi.Controllers {
     [Produces("application/json")]
     [ApiController]
     //[Authorize]
-    [Route("api/v{version:apiVersion}/runtime/policy")]
-    public class RuntimePolicyController : ControllerBase {
+    [Route("api/v{version:apiVersion}/policies")]
+    public class PolicyController : ControllerBase {
         private readonly IPolicyFacade facade;
         private readonly PolicyModelMapper policyMapper;
 
         /// <summary>
         /// Initializes a new instance of the PolicyController
         /// </summary>
-        public RuntimePolicyController(IPolicyFacade facade, PolicyModelMapper policyMapper) {
+        public PolicyController(IPolicyFacade facade, PolicyModelMapper policyMapper) {
             this.facade = facade;
             this.policyMapper = policyMapper;
         }
@@ -31,11 +32,11 @@ namespace Cortside.Authorization.WebApi.Controllers {
         /// <summary>
         /// Evaluates policy for user claims
         /// </summary>
-        [HttpPost("{policyName}")]
+        [HttpPost("{resourceId}/evaluate")]
         //[Authorize]
         [ProducesResponseType(typeof(AuthorizationModel), StatusCodes.Status200OK)]
-        public async Task<IActionResult> EvaluatePolicysAsync(string policyName, [FromBody] EvaluatePolicyRequest request) {
-            var dto = policyMapper.MapToDto(request, policyName);
+        public async Task<IActionResult> EvaluatePolicysAsync(Guid resourceId, [FromBody] EvaluatePolicyRequest request) {
+            var dto = policyMapper.MapToDto(request, resourceId);
             var result = await facade.EvaluatePolicyAsync(dto).ConfigureAwait(false);
             var model = policyMapper.Map(result);
             return Ok(model);
