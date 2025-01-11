@@ -31,14 +31,10 @@ namespace Cortside.Authorization.WebApi.IntegrationTests {
             builder.AddJsonFile("integrationsettings.json")
                 .AddInMemoryCollection(
                     new Dictionary<string, string> {
-                        ["HealthCheckHostedService:Checks:1:Value"] = $"{MockServer.Url}/api/health",
-                        ["HealthCheckHostedService:Checks:2:Value"] = $"{MockServer.Url}/api/health",
-                        ["HealthCheckHostedService:Checks:4:Value"] = $"{MockServer.Url}/api/health",
+                        //["HealthCheckHostedService:Checks:1:Value"] = $"{MockServer.Url}/api/health",
                         ["IdentityServer:Authority"] = MockServer.Url,
                         ["PolicyServer:TokenClient:Authority"] = MockServer.Url,
                         ["PolicyServer:PolicyServerUrl"] = MockServer.Url,
-                        ["CatalogApi:ServiceUrl"] = $"{MockServer.Url}",
-                        ["CatalogApi:Authentication:Url"] = $"{MockServer.Url}/connect/token"
                     });
         }
 

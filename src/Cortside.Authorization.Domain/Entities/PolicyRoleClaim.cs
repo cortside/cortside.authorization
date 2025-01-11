@@ -13,12 +13,17 @@ namespace Cortside.Authorization.Domain.Entities {
 
         protected PolicyRoleClaim() { }
 
-        public PolicyRoleClaim(string claimType, string value, string description, Role role) {
+        /// <summary>
+        /// Add a claim to a role using the appropriate method on the role
+        /// </summary>
+        /// <param name="claimType"></param>
+        /// <param name="value"></param>
+        /// <param name="description"></param>
+        public PolicyRoleClaim(string claimType, string value, string description) {
             PolicyRoleClaimResourceId = Guid.NewGuid();
             ClaimType = claimType;
             Value = value;
             Description = description;
-            Role = role;
         }
 
 

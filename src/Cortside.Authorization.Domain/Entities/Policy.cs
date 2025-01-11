@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using Cortside.AspNetCore.Auditable.Entities;
+using Cortside.Common.Messages.MessageExceptions;
+using Cortside.Common.Validation;
 using Microsoft.EntityFrameworkCore;
 
 namespace Cortside.Authorization.Domain.Entities {
@@ -40,7 +43,17 @@ namespace Cortside.Authorization.Domain.Entities {
         private readonly List<Role> roles = [];
         public virtual IReadOnlyList<Role> Roles => roles;
 
+        public void AddRole(Role role) {
+            Guard.Against(() => roles.Any(r => r.Name.Equals(role.Name, StringComparison.OrdinalIgnoreCase)), new BadRequestResponseException("Role names must be unique within a policy"));
+            roles.Add(role);
+        }
+
         private readonly List<Permission> permissions = [];
         public virtual IReadOnlyList<Permission> Permissions => permissions;
+
+        public void AddPermission(Permission permission) {
+            Guard.Against(() => permissions.Any(r => r.Name.Equals(permission.Name, StringComparison.OrdinalIgnoreCase)), new BadRequestResponseException("Permission names must be unique within a policy"));
+            permissions.Add(permission);
+        }
     }
 }

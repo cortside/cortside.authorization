@@ -14,11 +14,15 @@ namespace Cortside.Authorization.Domain.Entities {
 
         protected Permission() { }
 
-        public Permission(string name, string description, Policy policy) {
+        /// <summary>
+        /// Add a permission to a policy by using the appropriate method on a policy
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="description"></param>
+        public Permission(string name, string description) {
             PermissionResourceId = Guid.NewGuid();
             Name = name;
             Description = description;
-            Policy = policy;
         }
 
 

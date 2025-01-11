@@ -14,9 +14,12 @@ namespace Cortside.Authorization.Domain.Entities {
 
         protected RolePermission() { }
 
-        public RolePermission(Role role, Permission permission) {
+        /// <summary>
+        /// Add a permission within a policy to a role within a policy using the appropriate method on the role
+        /// </summary>
+        /// <param name="permission"></param>
+        public RolePermission(Permission permission) {
             RolePermissionResourceId = Guid.NewGuid();
-            Role = role;
             Permission = permission;
         }
 
@@ -32,7 +35,7 @@ namespace Cortside.Authorization.Domain.Entities {
         [ForeignKey(nameof(RoleId))]
         [Comment("FK to Role")]
         public int RoleId { get; private set; }
-        public Role Role { get; private set; }
+        public Role Role { get; private set;}
 
         [ForeignKey(nameof(PermissionId))]
         [Comment("FK to Permission")]

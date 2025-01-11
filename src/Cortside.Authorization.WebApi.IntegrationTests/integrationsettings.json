@@ -6,7 +6,11 @@
     "ServerUrl": "http://mitterhorn:5341"
   },
   "HealthCheckHostedService": {
-    "Enabled": true
+    "Name": "{{Service:Name}}",
+    "Enabled": true,
+    "Interval": 5,
+    "CacheDuration": 5,
+    "Checks": []
   },
   "IdentityServer": {
     "RequireHttpsMetadata": false

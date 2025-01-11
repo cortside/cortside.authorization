@@ -26,15 +26,14 @@ namespace Cortside.Authorization.DomainService.Tests {
         public async Task ShouldGetRolesByClaimsHappyPathAsync() {
             // arrange
             var policy = new Policy("Orders", "the policy for orders service");
+            var role = new Role("admin", "admin role");
+            policy.AddRole(role);
+            var permission = new Permission("GetOrders", "can get orders");
+            policy.AddPermission(permission);
+            role.AddPermission(permission);
+            var policyRoleClaim = new PolicyRoleClaim("sub", Guid.NewGuid().ToString(), "this subject assigned to role");
+            role.AddPolicyRoleClaim(policyRoleClaim);
             await db.Policies.AddAsync(policy);
-            var role = new Role("admin", "admin role", policy);
-            await db.Roles.AddAsync(role);
-            var permission = new Permission("GetOrders", "can get orders", policy);
-            await db.Permissions.AddAsync(permission);
-            var rolePermission = new RolePermission(role, permission);
-            await db.RolePermissions.AddAsync(rolePermission);
-            var policyRoleClaim = new PolicyRoleClaim("sub", Guid.NewGuid().ToString(), "this subject assigned to role", role);
-            await db.PolicyRoleClaims.AddAsync(policyRoleClaim);
             await db.SaveChangesAsync();
 
             var dto = new EvaluatePolicyDto {
@@ -58,15 +57,14 @@ namespace Cortside.Authorization.DomainService.Tests {
         public async Task ShouldNotGetRolesByClaimsInvalidPolicyIdAsync() {
             // arrange
             var policy = new Policy("Orders", "the policy for orders service");
+            var role = new Role("admin", "admin role");
+            policy.AddRole(role);
+            var permission = new Permission("GetOrders", "can get orders");
+            policy.AddPermission(permission);
+            role.AddPermission(permission);
+            var policyRoleClaim = new PolicyRoleClaim("sub", Guid.NewGuid().ToString(), "this subject assigned to role");
+            role.AddPolicyRoleClaim(policyRoleClaim);
             await db.Policies.AddAsync(policy);
-            var role = new Role("admin", "admin role", policy);
-            await db.Roles.AddAsync(role);
-            var permission = new Permission("GetOrders", "can get orders", policy);
-            await db.Permissions.AddAsync(permission);
-            var rolePermission = new RolePermission(role, permission);
-            await db.RolePermissions.AddAsync(rolePermission);
-            var policyRoleClaim = new PolicyRoleClaim("sub", Guid.NewGuid().ToString(), "this subject assigned to role", role);
-            await db.PolicyRoleClaims.AddAsync(policyRoleClaim);
             await db.SaveChangesAsync();
 
             var dto = new EvaluatePolicyDto {
@@ -85,12 +83,13 @@ namespace Cortside.Authorization.DomainService.Tests {
         public async Task ShouldGetRolesByClaimsWhenClaimAssignedToRoleAsync() {
             // arrange
             var policy = new Policy("Orders", "the policy for orders service");
+            var role = new Role("admin", "admin role");
+            policy.AddRole(role);
+            var unmatchedRole = new Role("unmatched", "");
+            policy.AddRole(unmatchedRole);
+            var policyRoleClaim = new PolicyRoleClaim("sub", Guid.NewGuid().ToString(), "this subject assigned to role");
+            role.AddPolicyRoleClaim(policyRoleClaim);
             await db.Policies.AddAsync(policy);
-            var role = new Role("admin", "admin role", policy);
-            var unmatchedRole = new Role("unmatched", "", policy);
-            await db.Roles.AddRangeAsync(role, unmatchedRole);
-            var policyRoleClaim = new PolicyRoleClaim("sub", Guid.NewGuid().ToString(), "this subject assigned to role", role);
-            await db.PolicyRoleClaims.AddAsync(policyRoleClaim);
             await db.SaveChangesAsync();
 
             var dto = new EvaluatePolicyDto {
@@ -111,12 +110,13 @@ namespace Cortside.Authorization.DomainService.Tests {
         public async Task ShouldGetRolesByClaimsDistinctAsync() {
             // arrange
             var policy = new Policy("Orders", "the policy for orders service");
+            var role = new Role("admin", "admin role");
+            policy.AddRole(role);
+            var policyRoleClaim = new PolicyRoleClaim("sub", Guid.NewGuid().ToString(), "this subject assigned to role");
+            var policyRoleClaim2 = new PolicyRoleClaim("groups", Guid.NewGuid().ToString(), "this group assigned to role");
+            role.AddPolicyRoleClaim(policyRoleClaim);
+            role.AddPolicyRoleClaim(policyRoleClaim2); // same role, different claimtype/value
             await db.Policies.AddAsync(policy);
-            var role = new Role("admin", "admin role", policy);
-            await db.Roles.AddRangeAsync(role);
-            var policyRoleClaim = new PolicyRoleClaim("sub", Guid.NewGuid().ToString(), "this subject assigned to role", role);
-            var policyRoleClaim2 = new PolicyRoleClaim("groups", Guid.NewGuid().ToString(), "this group assigned to role", role);
-            await db.PolicyRoleClaims.AddRangeAsync(policyRoleClaim, policyRoleClaim2); // same role, different claimtype/value
             await db.SaveChangesAsync();
 
             var dto = new EvaluatePolicyDto {
@@ -140,11 +140,11 @@ namespace Cortside.Authorization.DomainService.Tests {
         public async Task ShouldNotGetRolesByClaimsWhenNoValidClaimAsync() {
             // arrange
             var policy = new Policy("Orders", "the policy for orders service");
+            var role = new Role("admin", "admin role");
+            policy.AddRole(role);
+            var policyRoleClaim = new PolicyRoleClaim("sub", Guid.NewGuid().ToString(), "this subject assigned to role");
+            role.AddPolicyRoleClaim(policyRoleClaim);
             await db.Policies.AddAsync(policy);
-            var role = new Role("admin", "admin role", policy);
-            await db.Roles.AddRangeAsync(role);
-            var policyRoleClaim = new PolicyRoleClaim("sub", Guid.NewGuid().ToString(), "this subject assigned to role", role);
-            await db.PolicyRoleClaims.AddAsync(policyRoleClaim);
             await db.SaveChangesAsync();
 
             var dto = new EvaluatePolicyDto {
@@ -163,11 +163,11 @@ namespace Cortside.Authorization.DomainService.Tests {
         public async Task ShouldNotGetRolesByClaimsWhenNoValidClaimValueAsync() {
             // arrange
             var policy = new Policy("Orders", "the policy for orders service");
+            var role = new Role("admin", "admin role");
+            policy.AddRole(role);
+            var policyRoleClaim = new PolicyRoleClaim("sub", Guid.NewGuid().ToString(), "this subject assigned to role");
+            role.AddPolicyRoleClaim(policyRoleClaim);
             await db.Policies.AddAsync(policy);
-            var role = new Role("admin", "admin role", policy);
-            await db.Roles.AddRangeAsync(role);
-            var policyRoleClaim = new PolicyRoleClaim("sub", Guid.NewGuid().ToString(), "this subject assigned to role", role);
-            await db.PolicyRoleClaims.AddAsync(policyRoleClaim);
             await db.SaveChangesAsync();
 
             var dto = new EvaluatePolicyDto {
