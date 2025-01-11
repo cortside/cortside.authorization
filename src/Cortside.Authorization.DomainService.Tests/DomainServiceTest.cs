@@ -1,7 +1,7 @@
 using System;
 using System.Security.Claims;
-using Cortside.Authorization.Data;
 using Cortside.AspNetCore.Auditable;
+using Cortside.Authorization.Data;
 using Cortside.Common.Security;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -10,7 +10,9 @@ using Moq;
 
 namespace Cortside.Authorization.DomainService.Tests {
     public abstract class DomainServiceTest<T> : IDisposable {
-        protected DatabaseContext GetDatabaseContext() {
+        internal readonly UnitTestFixture testFixture;
+
+        protected static DatabaseContext GetDatabaseContext() {
             var databaseContextOptions = new DbContextOptionsBuilder<DatabaseContext>()
                 .UseInMemoryDatabase($"db-{Guid.NewGuid():d}")
                 .ConfigureWarnings(x => x.Ignore(InMemoryEventId.TransactionIgnoredWarning))
@@ -21,6 +23,10 @@ namespace Cortside.Authorization.DomainService.Tests {
 
         protected T Service { get; set; }
         protected Mock<IHttpContextAccessor> HttpContextAccessorMock { get; set; } = new Mock<IHttpContextAccessor>();
+
+        protected DomainServiceTest() {
+            testFixture = new UnitTestFixture();
+        }
 
         public void SetupHttpUser(Claim claim) {
             Mock<HttpContext> httpContext = new Mock<HttpContext>();

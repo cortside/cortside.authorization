@@ -33,7 +33,7 @@ namespace Cortside.Authorization.Data.Repositories {
 
             // get the ones that match to return
             var matched = assigned.Where(a => userClaims.Any(userClaim => userClaim.Key.Equals(a.ClaimType, StringComparison.OrdinalIgnoreCase) && userClaim.Value.Equals(a.Value, StringComparison.OrdinalIgnoreCase)));
-            return matched.Select(x => x.Role).ToList();
+            return matched.Select(x => x.Role).DistinctBy(r => r.RoleId).ToList();
         }
     }
 }

@@ -44,5 +44,8 @@ namespace Cortside.Authorization.Domain.Entities {
 
         private readonly List<RolePermission> rolePermissions = [];
         public virtual IReadOnlyList<RolePermission> RolePermissions => rolePermissions;
+
+        private readonly List<PolicyRoleClaim> policyRoleClaims = [];
+        public virtual IReadOnlyList<PolicyRoleClaim> PolicyRoleClaims => policyRoleClaims;
     }
 }
