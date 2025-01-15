@@ -1,6 +1,3 @@
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 using Cortside.AspNetCore.Auditable;
 using Cortside.AspNetCore.Auditable.Entities;
 using Cortside.AspNetCore.EntityFramework;
@@ -23,18 +20,10 @@ namespace Cortside.Authorization.Data {
             modelBuilder.HasDefaultSchema("dbo");
             //modelBuilder.AddDomainEventOutbox();
 
-            // TOTO: make modelBuilder extensions
-            SetDateTime(modelBuilder);
-            SetCascadeDelete(modelBuilder);
+            modelBuilder.SetDateTime();
+            modelBuilder.SetCascadeDelete();
         }
 
-        /// <summary>
-        /// Hook to add additional logic before entities are actually saved.  Shown here for example, only override if there is actual need.
-        /// </summary>
-        /// <param name="updatingSubject"></param>
-        /// <returns></returns>
-        protected override Task OnBeforeSaveChangesAsync(Subject updatingSubject) {
-            return Console.Out.WriteLineAsync($"Change tracker has {ChangeTracker.Entries().Count()} entries");
-        }
+
     }
 }

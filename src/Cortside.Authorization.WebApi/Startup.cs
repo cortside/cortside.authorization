@@ -63,10 +63,11 @@ namespace Cortside.Authorization.WebApi {
 
             // add ApplicationInsights telemetry
             var serviceName = Configuration["Service:Name"];
-            var config = Configuration.GetSection("ApplicationInsights").Get<ApplicationInsightsServiceOptions>();
-            services.AddApplicationInsights(serviceName, config);
+            var appInsightsConfig = Configuration.GetSection("ApplicationInsights").Get<ApplicationInsightsServiceOptions>();
+            if (appInsightsConfig != null && !string.IsNullOrEmpty(appInsightsConfig.ConnectionString)) {
+                services.AddApplicationInsights(serviceName, appInsightsConfig);
+            }
 
-            // add database context with interfaces
             services.AddDatabaseContext<IDatabaseContext, DatabaseContext>(Configuration);
 
             // add health services
