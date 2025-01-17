@@ -57,11 +57,12 @@ namespace Cortside.Authorization.Client {
 
             var requestModel = Map(dto);
 
-            logger.LogInformation("Evaluating policy {PolicyResourceId} for subject {SubjectId}", config.PolicyResourceId, requestModel.Claims.FirstOrDefault(c => c.Type == "sub"));
+            logger.LogInformation("Evaluating policy {PolicyResourceId} for subject {SubjectId}", config.PolicyResourceId, dto.User?.Claims.FirstOrDefault(c => c.Type == "sub")?.Value);
 
             if (config.CacheEnabled) {
                 var cached = await memCache.GetValueAsync<EvaluationResponse>(requestModel.GetCacheKey(config.PolicyResourceId), serializer);
                 if (cached != null) {
+                    logger.LogInformation("Returning cached policy evaluation result");
                     return cached;
                 }
             }
