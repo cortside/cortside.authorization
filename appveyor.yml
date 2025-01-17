@@ -18,6 +18,7 @@ environment:
     secure: 0rxw6OrmXRqB3UuBZFbC/w==
   SONAR_TOKEN:
     secure: iMwieUAbbS4oTgEVtdGWUujzaBkeNjhFzsPMj8Y3c8vkjWyCN2miKlyfWA25jtBr
+  CONFIGURATION: Debug
 
 init:
 - ps: $Env:LABEL = "CI" + $Env:APPVEYOR_BUILD_NUMBER.PadLeft(5, "0")
@@ -36,7 +37,7 @@ build_script:
     $branch = $env:APPVEYOR_REPO_BRANCH;
     .\build-dockerimages.ps1 -branch $branch -buildCounter $buildNumber -pushImage;
     $fileVersion = $env:APPVEYOR_BUILD_VERSION;
-    dotnet build src/Cortside.Authorization.Client --configuration $env:configuration /property:"Version=$fileVersion";
+    dotnet build src/Cortside.Authorization.Client --configuration $env:CONFIGURATION /property:"Version=$fileVersion";
 
 after_build:
 - ps: >-
@@ -49,7 +50,7 @@ after_build:
     $fileVersion = $fileVersion.replace("release/", "release-");
     $fileVersion = $fileVersion.replace("feature/", "");
     $fileVersion = $fileVersion.replace("bugfix/", "");
-    dotnet pack src/Cortside.Authorization.Client --include-symbols -p:SymbolPackageFormat=snupkg --configuration $env:configuration -o ((get-location).Path + '\artifacts') /property:Version=$fileVersion 
+    dotnet pack src/Cortside.Authorization.Client --include-symbols -p:SymbolPackageFormat=snupkg --configuration $env:CONFIGURATION -o ((get-location).Path + '\artifacts') /property:Version=$fileVersion 
     
 artifacts:
 - path: artifacts\**\*.*
