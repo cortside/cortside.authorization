@@ -5,6 +5,7 @@ using Cortside.Authorization.Facade;
 using Cortside.Authorization.WebApi.Mappers;
 using Cortside.Authorization.WebApi.Models.Requests;
 using Cortside.Authorization.WebApi.Models.Responses;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,7 +16,7 @@ namespace Cortside.Authorization.WebApi.Controllers {
     [ApiVersion("1")]
     [Produces("application/json")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     [Route("api/v{version:apiVersion}/policies")]
     public class PolicyController : ControllerBase {
         private readonly IPolicyFacade facade;
@@ -33,7 +34,6 @@ namespace Cortside.Authorization.WebApi.Controllers {
         /// Evaluates policy for user claims
         /// </summary>
         [HttpPost("{resourceId}/evaluate")]
-        //[Authorize]
         [ProducesResponseType(typeof(AuthorizationModel), StatusCodes.Status200OK)]
         public async Task<IActionResult> EvaluatePolicysAsync(Guid resourceId, [FromBody] EvaluatePolicyRequest request) {
             var dto = policyMapper.MapToDto(request, resourceId);
