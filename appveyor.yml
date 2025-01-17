@@ -35,7 +35,8 @@ build_script:
     $buildNumber = $env:APPVEYOR_BUILD_NUMBER;
     $branch = $env:APPVEYOR_REPO_BRANCH;
     .\build-dockerimages.ps1 -branch $branch -buildCounter $buildNumber -pushImage;
-- dotnet build src/Cortside.Authorization.Client --configuration %Configuration% /property:"Version=%APPVEYOR_BUILD_VERSION%"
+    $fileVersion = $env:APPVEYOR_BUILD_VERSION;
+    dotnet build src/Cortside.Authorization.Client --configuration $env:configuration /property:"Version=$fileVersion";
 
 after_build:
 - ps: >-
