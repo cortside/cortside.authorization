@@ -9,7 +9,7 @@ namespace Cortside.Authorization.Client {
         /// To include as prefix in authorization endpoint responses in consuming services
         /// </summary>
         public string PolicyName { get; set; }
-        public IEnumerable<string> ClaimTypes { get; set; } = Array.Empty<string>();
+        public IEnumerable<string> ClaimTypes { get; set; } = Enumerable.Empty<string>();
         public TimeSpan? CacheDuration { get; set; }
         public bool CacheEnabled => CacheDuration.HasValue;
     }
