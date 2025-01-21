@@ -13,7 +13,7 @@ namespace Cortside.Authorization.Client.Tests {
         [Fact]
         public void ShouldMapAllClaimTypes() {
             // arrange
-            List<Claim> claims = [new Claim("sub", "jane"), new Claim("group", "admin")];
+            List<Claim> claims = new List<Claim> { new Claim("sub", "jane"), new Claim("group", "admin") };
             var user = new ClaimsPrincipal(new ClaimsIdentity(claims));
             var dto = new EvaluationDto { User = user };
             var client = new Client.AuthorizationApiClient(new AuthorizationApiClientConfiguration { ServiceUrl = "http://blah" }, // no claimtypes specified
@@ -32,10 +32,10 @@ namespace Cortside.Authorization.Client.Tests {
         [Fact]
         public void ShouldMapOnlyDefinedClaimTypes() {
             // arrange
-            List<Claim> claims = [new Claim("sub", "jane"), new Claim("group", "admin")];
+            List<Claim> claims = new List<Claim> { new Claim("sub", "jane"), new Claim("group", "admin") };
             var user = new ClaimsPrincipal(new ClaimsIdentity(claims));
             var dto = new EvaluationDto { User = user };
-            var client = new Client.AuthorizationApiClient(new AuthorizationApiClientConfiguration { ServiceUrl = "http://blah", ClaimTypes = ["sub"] }, // claimtypes specified
+            var client = new Client.AuthorizationApiClient(new AuthorizationApiClientConfiguration { ServiceUrl = "http://blah", ClaimTypes = new List<string> { "sub" } }, // claimtypes specified
                 new Mock<ILogger<Client.AuthorizationApiClient>>().Object,
                 new Mock<IHttpContextAccessor>().Object
                 );
@@ -52,7 +52,7 @@ namespace Cortside.Authorization.Client.Tests {
         [Fact]
         public void ShouldGetCacheKey() {
             // arrange
-            List<Claim> claims = [new Claim("sub", "jane"), new Claim("group", "admin")];
+            List<Claim> claims = new List<Claim> { new Claim("sub", "jane"), new Claim("group", "admin") };
             var user = new ClaimsPrincipal(new ClaimsIdentity(claims));
             var dto = new EvaluationDto { User = user };
             var client = new Client.AuthorizationApiClient(new AuthorizationApiClientConfiguration { ServiceUrl = "http://blah" },

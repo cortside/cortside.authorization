@@ -52,7 +52,7 @@ namespace Cortside.Authorization.Client.Tests {
             config = new AuthorizationApiClientConfiguration {
                 ServiceUrl = server.Url,
                 CacheDuration = TimeSpan.FromSeconds(10),
-                ClaimTypes = ["sub", "groups"],
+                ClaimTypes = new List<string> { "sub", "groups" },
                 PolicyResourceId = Guid.NewGuid(),
                 Authentication = tokenRequest
             };
@@ -81,13 +81,13 @@ namespace Cortside.Authorization.Client.Tests {
         [Fact]
         public async Task ShouldEvaluatePolicyAsync() {
             // arrange
-            List<Claim> claims = [new Claim("sub", "jane"), new Claim("groups", "admin")];
+            List<Claim> claims = new List<Claim> { new Claim("sub", "jane"), new Claim("groups", "admin") };
             var user = new ClaimsPrincipal(new ClaimsIdentity(claims, "bearer"));
             var dto = new EvaluationDto { User = user };
 
             var response = new EvaluationResponse {
-                Permissions = ["CanRead", "CanWrite"],
-                Roles = ["admin"]
+                Permissions = new List<string> { "CanRead", "CanWrite" },
+                Roles = new List<string> { "admin" }
             };
             server.WireMockServer
                 .Given(Request.Create().WithPath($"/api/v1/policies/{config.PolicyResourceId}/evaluate")
@@ -106,12 +106,12 @@ namespace Cortside.Authorization.Client.Tests {
         [Fact]
         public async Task ShouldHavePermissionAsync() {
             // arrange
-            List<Claim> claims = [new Claim("sub", "jane"), new Claim("groups", "admin")];
+            List<Claim> claims = new List<Claim> { new Claim("sub", "jane"), new Claim("groups", "admin") };
             var user = new ClaimsPrincipal(new ClaimsIdentity(claims, "bearer"));
             var dto = new EvaluationDto { User = user };
 
             var response = new EvaluationResponse {
-                Permissions = ["CanRead", "CanWrite"],
+                Permissions = new List<string> { "CanRead", "CanWrite" },
             };
             server.WireMockServer
                 .Given(Request.Create().WithPath($"/api/v1/policies/{config.PolicyResourceId}/evaluate")
@@ -128,12 +128,12 @@ namespace Cortside.Authorization.Client.Tests {
         [Fact]
         public async Task ShouldNotHavePermissionAsync() {
             // arrange
-            List<Claim> claims = [new Claim("sub", "jane"), new Claim("groups", "admin")];
+            List<Claim> claims = new List<Claim> { new Claim("sub", "jane"), new Claim("groups", "admin") };
             var user = new ClaimsPrincipal(new ClaimsIdentity(claims, "bearer"));
             var dto = new EvaluationDto { User = user };
 
             var response = new EvaluationResponse {
-                Permissions = ["CanRead"],
+                Permissions = new List<string> { "CanRead" },
             };
             server.WireMockServer
                 .Given(Request.Create().WithPath($"/api/v1/policies/{config.PolicyResourceId}/evaluate")

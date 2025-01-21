@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 namespace Cortside.Authorization.Client.Models.Requests {
     public class EvaluationRequest {
 
-        public IEnumerable<ClaimModel> Claims { get; set; } = [];
+        public IEnumerable<ClaimModel> Claims { get; set; } = Array.Empty<ClaimModel>();
 
         public string GetCacheKey(Guid policyResourceId) {
             var sorted = JsonConvert.SerializeObject(SortClaims(Claims));
