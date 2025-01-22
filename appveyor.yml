@@ -8,7 +8,7 @@ configuration:
 platform: Any CPU
 
 # Do not build feature branch with open Pull Requests
-skip_branch_with_pr: true
+# skip_branch_with_pr: true # this also skips nuget deploy
 
 environment:
   # Don't report back to the mothership
