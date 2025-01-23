@@ -15,6 +15,9 @@
   "IdentityServer": {
     "RequireHttpsMetadata": false
   },
+  "AuthorizationApi": {
+    "ServiceUrl": "http://localhost"
+  },
   "ReceiverHostedService": {
     "Enabled": false
   },
