@@ -37,7 +37,10 @@ build:
 build_script:
 - ps: >-
     $buildNumber = $env:APPVEYOR_BUILD_NUMBER;
-    $branch = (Test-Path env:APPVEYOR_PULL_REQUEST_NUMBER) ? { $Env:APPVEYOR_PULL_REQUEST_HEAD_REPO_BRANCH } : { $env:APPVEYOR_REPO_BRANCH };
+    $branch = $env:APPVEYOR_REPO_BRANCH;
+    if (Test-Path env:APPVEYOR_PULL_REQUEST_NUMBER) {
+      $branch = $Env:APPVEYOR_PULL_REQUEST_HEAD_REPO_BRANCH;
+    }
     $pushImage = (-Not (Test-Path env:APPVEYOR_PULL_REQUEST_NUMBER));
     .\build-dockerimages.ps1 -branch $branch -buildCounter $buildNumber -pushImage:$pushImage;
     $fileVersion = $env:APPVEYOR_BUILD_VERSION;
