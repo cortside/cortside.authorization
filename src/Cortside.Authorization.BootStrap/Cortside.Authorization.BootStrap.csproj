@@ -11,8 +11,8 @@
     <NoWarn>$(NoWarn),1573,1591,1712</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Cortside.AspNetCore" Version="6.4.298-develop" />
-    <PackageReference Include="Cortside.AspNetCore.AccessControl" Version="6.4.298-develop" />
+    <PackageReference Include="Cortside.AspNetCore" Version="6.4.302-ENG-4482-authorization" />
+    <PackageReference Include="Cortside.AspNetCore.AccessControl" Version="6.4.302-ENG-4482-authorization" />
     <PackageReference Include="Cortside.Common.BootStrap" Version="6.4.465-develop" />
     <PackageReference Include="Cortside.Common.Cryptography" Version="6.4.465-develop" />
     <PackageReference Include="DistributedLock.SqlServer" Version="1.0.6" />

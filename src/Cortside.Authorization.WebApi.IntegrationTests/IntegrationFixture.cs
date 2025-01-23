@@ -33,8 +33,6 @@ namespace Cortside.Authorization.WebApi.IntegrationTests {
                     new Dictionary<string, string> {
                         //["HealthCheckHostedService:Checks:1:Value"] = $"{MockServer.Url}/api/health",
                         ["IdentityServer:Authority"] = MockServer.Url,
-                        ["PolicyServer:TokenClient:Authority"] = MockServer.Url,
-                        ["PolicyServer:PolicyServerUrl"] = MockServer.Url,
                     });
         }
 
@@ -61,8 +59,6 @@ namespace Cortside.Authorization.WebApi.IntegrationTests {
                 });
                 services.RegisterFileSystemDistributedLock();
             }
-
-            //services.RegisterDomainEventPublisher();
 
             SerializerSettings = services.ResolveSerializerSettings();
         }
