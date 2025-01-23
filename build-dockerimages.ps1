@@ -110,6 +110,7 @@ Write-Output "nugetfeed: $($config.nuget.feed)"
 Write-Output "buildimage=$($config.docker.buildimage)"
 Write-Output "runtimeimage=$($config.docker.runtimeimage)"
 Write-Output "image:$($config.docker.image)"
+Write-Output "pushImage: $($pushImage.IsPresent)" 
 
 #Run Build for all Dockerfiles in /Docker path
 $dockerFiles = Get-ChildItem -Path $dockercontext -Filter $dockerpath -Recurse
