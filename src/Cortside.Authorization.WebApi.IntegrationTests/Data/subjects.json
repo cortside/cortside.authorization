@@ -10,7 +10,7 @@
         }
       ],
       "userType": "service",
-      "referenceToken": "107d225e3ea706bbbceb83593daf5c73c1347a89eaa89f253ca845beffb2e3f9",
+      "referenceToken": "fakeToken-auth",
       "policies": [
         {
           "policyName": "Authorization*",
