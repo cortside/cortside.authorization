@@ -1,26 +1,21 @@
 # Cortside.Authorization
 
-This project was created from the cortside-api template by doing the following:
+This project was created from the [cortside-api template](https://github.com/cortside/cortside.templates).
 
-```text
-dotnet new --install cortside.templates
-dotnet new cortside-api --name Cortside.Authorization --company Cortside --product Authorization
-```
+It contains a .Net WebApi and a [RestApiClient](https://github.com/cortside/cortside.restapiclient/tree/develop)
 
-The template repo can be found at https://github.com/cortside/cortside.templates.
+- WebApi [persists](./src/sql/data/001-catalog-policy.data.sql) and serves Roles and Permissions based on configurable ClaimsPrincipal Claims (key and value)
+- [Cortside.Authorization.Client](./src/Cortside.Authorization.Client/README.md) can be registered in other WebApis for real-time RBAC (roll-based access control)
 
-## Features
+## TODO
 
-The template is a contrived example that was created to show a number of concepts, you have find a list of the notable [features here](Features.md).
-
-## Service Diagram
-
-To better understand the responsibilities and relationship of this service with others, see the [service diagram](docs/ServiceDiagram.md).
+- Admin policy data
+- CRUD endpoints
 
 ## Pre-Requisites
 
-* .NET 6.0
-* Visual Studio 2022
+- .NET 8.0
+- Visual Studio 2022
 
 ## Visual Studio Extensions
 
@@ -33,16 +28,9 @@ Here are the Visual Studio Extensions we use for this project:
 - Code Cleanup On Save
 - MappingGenerator -- https://mappinggenerator.net/
 
-# First Time To Run
-
-Before you run this for the first time you will need to run powershell script `.\build.ps1`
-
-This will create the `build.json` file in:
-src\Cortside.Authorization.WebApi\build.json
-
 ## Database location
 
-You can override the default expected location of the database using environment variables.  The easiest way to set these is to set them up in your powershell profile (`notepad $PROFILE`):
+You can override the default expected location of the database using environment variables. The easiest way to set these is to set them up in your powershell profile (`notepad $PROFILE`):
 
 ```powershell
 $env:MSSQL_SERVER="kehlstein"
@@ -50,7 +38,7 @@ $env:MSSQL_USER="sa"
 $env:MSSQL_PASSWORD="password1@"
 ```
 
-The default will be to use Sql Express if `$env:MSSQL_SERVER` is not set.  The default to be to use logged in user with trusted connection if `$env:MSSQL_USER` is not set.  The above example shows how to use a remote host with sql authentication enabled.
+The default will be to use Sql Express if `$env:MSSQL_SERVER` is not set. The default to be to use logged in user with trusted connection if `$env:MSSQL_USER` is not set. The above example shows how to use a remote host with sql authentication enabled.
 
 ## Create database locally
 
@@ -95,7 +83,3 @@ Database changes are deployed to shared environments when Octopus runs `update-d
 
 - `run.ps1` is a convenience script, if debugging in VisualStudio is not needed
 - you may need to run `update-database.ps1` to update your local database (do not run against SqlTestOnlineApp, as deployments should do that)
-- you may need to run rabbitmq in docker locally, when working with domain event message publication and consumption
-  - run `start-rabbitmq.ps1` - this will start a container and configure queues and subscriptions per the config in the cloned repo
-    - admin UI can be accessed at http://localhost:15672/ with admin/password as credentials
-
