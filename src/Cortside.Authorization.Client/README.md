@@ -1,6 +1,7 @@
 # Authorization.Client
 
 To be installed by consuming services.
+Nuget: https://www.nuget.org/packages/Cortside.Authorization.Client
 
 ```
 services.AddAuthorizationApiClient(Configuration);
